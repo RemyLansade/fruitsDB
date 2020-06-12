@@ -59,41 +59,50 @@ const Fruit = mongoose.model("Fruit", fruitSchema);
 //     }
 // });
 
+// Fruit.updateOne({_id: "5ee1518300879f2c182be3e0"},{name: "Melon"}, function(err, res) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         mongoose.connection.close();
+//         console.log('The selected item is succesfully update');
+//     }
+// });
+
+// Fruit.deleteOne({_id: "5ee1518300879f2c182be3e0"}, function(err, res) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         mongoose.connection.close();
+//         console.log('The selected item is succesfully delete)à');
+//     }
+// });
+
 // fruit.save();
 
 
 
+// ----------RELATIONSHIP-----------//
 
+const personSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    favouriteFruit: fruitSchema
+});
 
-// const personSchema = new mongoose.Schema({
-//     name: String,
-//     age: Number
-// });
+const Person = mongoose.model("Person", personSchema);
 
-// const Person = mongoose.model("Person", personSchema);
+const pineapple = new Fruit({
+    name: "Pineapple",
+    rating: 10,
+    review: "Best fruit ever"
+});
 
-// const person = new Person({
-//     name: "John",
-//     age: 37
-// })
+pineapple.save();
 
-// person.save();
+const amy = new Person({
+    name: "Amy",
+    age: 14,
+    favouriteFruit: pineapple
+});
 
-
-//______________________________________________
-
-const findDocuments = function(db, callback) {
-
-    // Get the documents collection
-    const fruits = db.collection('fruits');
-    
-    // Find some documents
-    fruits.find({}).toArray(function(err, fruits) {
-        
-        assert.equal(err, null);
-        console.log("Found the following records");
-        console.log(fruits)
-        callback(fruits);
-
-    });
-}
+amy.save();
